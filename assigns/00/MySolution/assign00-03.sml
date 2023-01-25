@@ -23,4 +23,4 @@ fun int2strBasic(n: int): string =
     str(chr(n+48));
 
 fun int2str(i0: int): string =
-    if i0 < 10 then int2strBasic(i0) else strcat(int2strBasic(i0 div 10), int2strBasic(i0 - ((i0 div 10) * 10)))
+    if i0 < 10 then int2strBasic(i0) else strcat(int2str(i0 div 10), int2strBasic(i0 - ((i0 div 10) * 10)))
