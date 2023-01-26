@@ -1,0 +1,65 @@
+Standard ML of New Jersey (32-bit) v110.96 [built: Fri Dec 13 15:22:22 2019]
+- use "assign00-01-test.sml";
+[opening assign00-01-test.sml]
+[opening ./../MySolution/assign00-01.sml]
+val fact = fn : int -> int
+val fact2 = fn : int -> int
+val fact3 = fn : int -> int
+val N = 13 : int
+val it = () : unit
+Assign00-01-test passed!
+val it = () : unit
+- use "assign00-02-test.sml"; 
+[opening assign00-02-test.sml]
+[opening ./../MySolution/assign00-02.sml]
+val isDivisibleBy = fn : int * int -> bool
+val isPrime = fn : int -> bool
+val it = () : unit
+Assign00-02-test passed!
+val it = () : unit
+- use "assign00-03-test.sml"; 
+[opening assign00-03-test.sml]
+[opening ./../MySolution/assign00-03.sml]
+[autoloading]
+[library $SMLNJ-BASIS/basis.cm is stable]
+[library $SMLNJ-BASIS/(basis.cm):basis-common.cm is stable]
+[autoloading done]
+val ord = fn : char -> int
+val chr = fn : int -> char
+val str = fn : char -> string
+val strlen = fn : string -> int
+val strcat = fn : string * string -> string
+val strsub = fn : string * int -> char
+val int2strBasic = fn : int -> string
+val int2str = fn : int -> string
+val it = () : unit
+Assign00-03-test passed!
+val it = () : unit
+- use "assign00-04-test.sml"; 
+[opening assign00-04-test.sml]
+[opening ./../MySolution/assign00-04.sml]
+val ord = fn : char -> int
+val chr = fn : int -> char
+val str = fn : char -> string
+val strlen = fn : string -> int
+val strcat = fn : string * string -> string
+val strsub = fn : string * int -> char
+val substring2 = fn : string * int -> string
+val str2int = fn : string -> int
+val it = () : unit
+Assign00-04-test passed!
+val it = () : unit
+- use "assign00-05-test.sml"; 
+[opening assign00-05-test.sml]
+[opening ./../MySolution/assign00-05.sml]
+val ord = fn : char -> int
+val chr = fn : int -> char
+val str = fn : char -> string
+val strlen = fn : string -> int
+val strcat = fn : string * string -> string
+val strsub = fn : string * int -> char
+val substring2 = fn : string * int -> string
+val stringrev = fn : string -> string
+val it = () : unit
+Assign00-05-test passed!
+val it = () : unit
