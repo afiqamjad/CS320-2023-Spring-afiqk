@@ -3,7 +3,17 @@
 Assign01: Onward!
 *)
 (* ****** ****** *)
+(*
 use "./assign01-lib.sml";
+*)
+(* ****** ****** *)
+val list_append = op@
+val list_reverse = List.rev
+(* ****** ****** *)
+
+exception XlistConsMatch
+exception XlistSubscript
+
 (* ****** ****** *)
 
 datatype 'a xlist =
@@ -41,12 +51,12 @@ xlist_reverse(xs) => list_reverse(list_of_xlist(xs))
 Assign01-01: 10 points
 //
 Please implement a function
-that computes the length of an xlist DIRECTLY:
+that computes the size of an xlist DIRECTLY:
 //
-fun xlist_len(xs: 'a xlist): int
+fun xlist_size(xs: 'a xlist): int
 //
 That is, you should NOT convert xlist into list
-and then compute the length of the converted list
+and then compute the size of the converted list
 //
 *)
 
@@ -62,10 +72,10 @@ that does subscripting on xlist DIRECTLY:
 fun xlist_sub(xs: 'a xlist, i0: int): 'a
 //
 If 'i0' is an illegal index, then xlist_sub
-should raise the Subscript exception.
+should raise the XlistSubscript exception.
 //
-You should NOT convert xlist into list
-and then compute the length of the converted list
+You should NOT convert xlist into list and
+then do subscripting.
 //
 *)
 
@@ -83,8 +93,8 @@ fun xlist_remove_reverse(xs: 'a xlist): 'a xlist
 //
 In particular, your implementation should guarantee:
 1. 'xs' and 'ys' represent the same list
-2. 'ys' does NOT make any use of 'mylist_reverse'
-3. 'xs' and 'ys' use the same number of 'mylist_append'
+2. 'ys' does NOT make any use of 'xlist_reverse'
+3. 'xs' and 'ys' use the same number of 'xlist_append'
 //
 *)
   
@@ -92,54 +102,22 @@ In particular, your implementation should guarantee:
 
 (*
 //
-Assign01-04: 20 points
+Assign01-04: 10 points
 //
-Please implement a function that checks DIRECTLY
-if a given int xlist is sorted/ordered ascendingly:
+Please recall the following question in Assign00:
+Assign00-04: 10 points
+Please implement a function that converts a given
+string to an integer:
+fun str2int(cs: string): int
+In particular, it is expected that str2int(int2str(x)) = x
 //
-fun xlist_sortedq(xs: int xlist): bool
+This time you are asked to implement the following
+function that only turns a legal representation of an integer
+into an integer. By a legal representation of an integer, we
+mean a string consisting of a non-empty sequence of digits (where
+the digit '0' can be a leading digit).
 //
-You should NOT convert xlist into list
-and then check whether the converted list is sorted.
-//
-*)
-  
-(* ****** ****** *)
-
-(*
-//
-Assign01-05: 20 points
-//
-// The permutations of 0,1,2 can be ordered
-// according to the lexicographic ordering as follows:
-//
-// (0,1,2) < (0,2,1) < (1,0,2) < (1,2,0) < (2,0,1) < (2,1,0)
-//
-// This ordering can be readily generalized to the permutations
-// of n numbers, which n is positive. Given a permutation xs of
-// the first n natural numbers, next_permuation(xs) returns the next
-// permutation following xs if it exists, and None0() otherwise.
-//
-// examples:
-//
-// permute_next_exn( [1,0,2] ) = [1,2,0]
-// permute_next_exn( [2,1,0] ) = raise(LastPermExn)
-// permute_next_exn( [2,10,3,8,4,1,0,6,9,7,5] ) = [2,10,3,8,4,1,0,7,5,6,9]
-//
-// permute_next_opt( [1,0,2] ) = Some0( [1,2,0] )
-// permute_next_opt( [2,1,0] ) = None0()
-// permute_next_opt( [2,10,3,8,4,1,0,6,9,7,5] ) = Some0( [2,10,3,8,4,1,0,7,5,6,9] )
-//
-*)
-(*
-//
-exception LastPermExn
-//
-fun
-permute_next_exn(xs: int list): int list
-//
-fun
-permute_next_opt(xs: int list): (int list) optn
+fun str2int_opt(cs: string): int option
 //
 *)
 
