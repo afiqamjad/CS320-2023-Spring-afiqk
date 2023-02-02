@@ -33,6 +33,8 @@ let
     xlist_append(xs, ys) => if i0 < xlist_size(xs) then loop(xs, i0) else loop(ys,i0-xlist_size(xs))
     |
     xlist_reverse(xs) => case xs of
+    xlist_nil => raise XlistSubscript
+    |
     xlist_cons(x1, xs) => if i0 < xlist_size(xs) then loop(xs, i0-1) else x1 
     |
     xlist_snoc(xs, x1) => if i0 > 0 then loop(xs, i0-1) else x1
