@@ -54,8 +54,7 @@ fun smaller_sort(cs: int2): int2 =
     cs
   else
     (#2(cs), #1(cs))
-
-(34)(12)
+    
 fun medium_sort(cs1: int2, cs2: int2): int4 =
   if #1(cs2) < #2(cs1) then
     (#1(cs2),#2(cs2),#1(cs1),#2(cs1))
