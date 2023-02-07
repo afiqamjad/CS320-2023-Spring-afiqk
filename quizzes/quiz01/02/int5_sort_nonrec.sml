@@ -56,12 +56,23 @@ fun smaller_sort(cs: int2): int2 =
     (#2(cs), #1(cs))
     
 fun medium_sort(cs1: int2, cs2: int2): int4 =
-  if #1(cs2) < #2(cs1) then if
-    #2(cs2) >= #2 (cs1) then
-      (#1(cs2),#1(cs1),#2(cs1),#2(cs2))
+  if #1(cs1) > #2(cs2) then
+    (#1(cs2), #2(cs2), #1(cs1), #2(cs1))
+  else 
+    if #2(cs1) <= #1(cs2) then
+      (#1(cs1), #2(cs1), #1(cs2), #2(cs2))
     else
-    (#1(cs2),#2(cs2),#1(cs1),#2(cs1))
-  else     (#1(cs1),#2(cs1),#1(cs2),#2(cs2))
+      if #1(cs1) >= #1(cs2) then
+        if #2(cs1) <= #2(cs2) then
+          (#1(cs2), #1(cs1), #2(cs1), #2(cs2))
+        else
+          (#1(cs2), #1(cs1), #2(cs2), #2(cs1))
+      else
+        if #2(cs1) <= #2(cs2) then
+          (#1(cs1), #1(cs2), #2(cs1), #2(cs2))
+        else
+          (#1(cs1), #1(cs2), #2(cs2), #2(cs1))
+
 fun
 int5_sort_nr(xs: int5): int5 =
   let
@@ -72,10 +83,19 @@ int5_sort_nr(xs: int5): int5 =
     val smallSecond = smaller_sort(second)
     val medium = medium_sort(smallFirst, smallSecond)
   in
-    if third < #4(medium) then
-      (third, #1(medium),#2(medium),#3(medium),#4(medium))
+    if third >= #4(medium) then
+      (#1(medium),#2(medium),#3(medium),#4(medium), third)
     else
-       (#1(medium),#2(medium),#3(medium),#4(medium), third)
+      if third >= #3(medium) then
+        (#1(medium),#2(medium),#3(medium),third,#4(medium))
+      else
+        if third >= #2(medium) then
+          (#1(medium),#2(medium),third,#3(medium),#4(medium))
+        else
+          if third >= #1(medium) then
+            (#1(medium),third,#2(medium),#3(medium),#4(medium))
+          else
+            (third,#1(medium),#2(medium),#3(medium),#4(medium))
   end
 (*
 Please Give your implementation as follows:
