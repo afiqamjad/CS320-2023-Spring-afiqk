@@ -171,9 +171,28 @@ in the given tuple are from the same deck.
 fun card5_fullhouse(cs: card5): bool
 //
 *)
-
 fun
 card5_fullhouse(cs: card5): bool =
+let 
+  val ranking = (rank2int(card_rank(#1(cs))),rank2int(card_rank(#2(cs))),rank2int(card_rank(#3(cs))),rank2int(card_rank(#4(cs))),rank2int(card_rank(#5(cs))))
+  val sorted = int5_sort(ranking)
+in
+  if #1(sorted) = #2(sorted) then
+    if #2(sorted) = #3(sorted) then
+      if #4(sorted) = #5(sorted) then
+        true
+      else
+        false
+    else if #3(sorted) = #4(sorted) then
+            if #4(sorted) = #5(sorted) then
+              true
+            else 
+              false
+          else 
+            false    
+  else
+    false
+end
 (*
 Please Give your implementation as follows:
 *)
