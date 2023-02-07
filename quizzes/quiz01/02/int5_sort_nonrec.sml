@@ -72,8 +72,12 @@ else
     val third = #5(xs)
     val smallFirst = smaller_sort(first)
     val smallSecond = smaller_sort(second)
+    val medium = medium_sort(smallFirst, smallSecond)
   in
-    if #2(first) 
+    if third < #4(medium) then
+      (third, #1(medium),#2(medium),#3(medium),#4(medium))
+    else
+       (#1(medium),#2(medium),#3(medium),#4(medium), third)
   end
 (*
 Please Give your implementation as follows:
