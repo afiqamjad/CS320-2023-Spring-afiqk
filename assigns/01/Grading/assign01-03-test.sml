@@ -96,6 +96,18 @@ val () = assert320_some(nappend(xs)=nappend(ys), "assign01-03-test:2")
 val () = print("Assign01-03-test passed!\n")
 
 (* ****** ****** *)
+val xs = xlist_reverse(xs)
+val xs = xlist_append(xs, xs)
+val ys = xlist_remove_reverse(xs)
+val () = assert320_some
+(list_of_xlist(xs)=list_of_xlist(ys), "assign01-03-test:2")
+val () = assert320_some(nreverse(ys)=0, "assign01-03-test:2")
+val () = assert320_some(nappend(xs)=nappend(ys), "assign01-03-test:2")
+(* ****** ****** *)
+
+val () = print("Assign01-03-grade passed!\n")
+
+(* ****** ****** *)
 end (* end-of-local *)
 
 (* ****** ****** *)
