@@ -49,8 +49,32 @@ int5_sort_nr(xs) for every 5-tuple xs of the type int5.
 *)
 (* ****** ****** *)
 
+fun smaller_sort(cs: int2): int2 =
+  if #1(cs) <= #2(cs) then
+    cs
+  else
+    (#2(cs), #1(cs))
+
+(34)(12)
+fun medium_sort(cs1: int2, cs2: int2): int4 =
+  if #1(cs2) < #2(cs1) then
+    (#1(cs2),#2(cs2),#1(cs1),#2(cs1))
+  else
+    (#1(cs1),#2(cs1),#1(cs2),#2(cs2))
 fun
 int5_sort_nr(xs: int5): int5 =
+if #1(xs)*#2(xs)*#3(xs)*#4(xs)*#5(xs) = #1(xs)*#1(xs)*#1(xs)*#1(xs)*#1(xs) then
+  xs
+else
+  let
+    val first = (#1(xs), #2(xs))
+    val second = (#3(xs), #4(xs))
+    val third = #5(xs)
+    val smallFirst = smaller_sort(first)
+    val smallSecond = smaller_sort(second)
+  in
+    if #2(first) 
+  end
 (*
 Please Give your implementation as follows:
 *)
