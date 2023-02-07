@@ -63,9 +63,6 @@ fun medium_sort(cs1: int2, cs2: int2): int4 =
     (#1(cs1),#2(cs1),#1(cs2),#2(cs2))
 fun
 int5_sort_nr(xs: int5): int5 =
-if #1(xs)*#2(xs)*#3(xs)*#4(xs)*#5(xs) = #1(xs)*#1(xs)*#1(xs)*#1(xs)*#1(xs) then
-  xs
-else
   let
     val first = (#1(xs), #2(xs))
     val second = (#3(xs), #4(xs))
