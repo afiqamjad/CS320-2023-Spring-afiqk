@@ -49,4 +49,4 @@ def mylist_rappend(bs, cs):
 # (* ****** ****** *)
 
 def mylist_reverse(bs):
-    return mylist_rappend(bs, mylist_nil)
+    return mylist_rappend(bs, mylist_nil())
