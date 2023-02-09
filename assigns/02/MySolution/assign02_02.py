@@ -49,22 +49,22 @@ print("[import ./../assign02.py] is done!")
     #   qsort(xs)
 # end (* end-of-[list_quicksort]: let *) 
     
-
-def qpart(xs, p0):
-    if mylist_nilq(xs):
-        return mylist_nil(), mylist_nil()
-    ys, zs = qpart(mylist_cons.get_cons2(xs), p0)
-    if mylist_cons.get_cons1(xs) <= p0:
-        return mylist_cons(mylist_cons.get_cons1(xs), ys), zs
-    return ys, mylist_cons(mylist_cons.get_cons1(xs), zs)
-
-def qsort(xs):
-    if mylist_nilq(xs):
-        return mylist_nil()
-    ys, zs = qpart(mylist_cons.get_cons2(xs), mylist_cons.get_cons1(xs))
-    ys = qsort(ys)
-    zs = qsort(zs)
-    return mylist_append(mylist_append(ys, mylist_cons(mylist_cons.get_cons1(xs), mylist_nil())), zs)
-
 def mylist_quicksort(xs):
+
+    def qsort(xs):
+        if mylist_nilq(xs):
+            return mylist_nil()
+        ys, zs = qpart(mylist_cons.get_cons2(xs), mylist_cons.get_cons1(xs))
+        ys = qsort(ys)
+        zs = qsort(zs)
+        return mylist_append(mylist_append(ys, mylist_cons(mylist_cons.get_cons1(xs), mylist_nil())), zs)
+
+    def qpart(xs, p0):
+        if mylist_nilq(xs):
+            return mylist_nil(), mylist_nil()
+        ys, zs = qpart(mylist_cons.get_cons2(xs), p0)
+        if mylist_cons.get_cons1(xs) <= p0:
+            return mylist_cons(mylist_cons.get_cons1(xs), ys), zs
+        return ys, mylist_cons(mylist_cons.get_cons1(xs), zs)
+        
     return qsort(xs)
