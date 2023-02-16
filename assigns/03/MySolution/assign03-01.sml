@@ -14,10 +14,25 @@ finds the first root of [f0] in
 the following sequence:
 0, 1, -1, 2, -2, 3, -3, 4, -4, ...
 *)
-(*
+
 fun
-find_root(f0: int -> int): int = ...
-*)
+find_root(f0: int -> int): int =
+    if f0(0) = 0 then
+        0
+    else
+        let
+          val x = 1
+          fun looper(y: int): int =
+            if f0(y) = 0 then
+                y
+            else
+                if (y + y) > 0 then
+                looper(y*(~1))
+            else
+                looper((y*(~1)) + 1)
+        in
+          looper(x)
+        end
 
 (* ****** ****** *)
 
