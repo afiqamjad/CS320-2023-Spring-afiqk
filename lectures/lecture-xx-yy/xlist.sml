@@ -69,6 +69,13 @@ xlist_rlistize =
 fn(xs) => foreach_to_rlistize(xlist_foreach)(xs)
 
 (* ****** ****** *)
+val xlist_get_at =
+fn(xs, i0) =>
+  foreach_to_get_at(xlist_foreach)(xs,i0)
+val xlist_rget_at =
+fn(xs, i0) =>
+  foreach_to_get_at(xlist_rforeach)(xs,i0)
+(* ****** ****** *)
 val
 xlist_foldleft =
 fn(r0,xs,fopr) =>
@@ -91,9 +98,25 @@ val xs_rlist = xlist_rlistize(xs)
 
 (* ****** ****** *)
 
+val x0 = xlist_get_at(xs, 0)
+val x1 = xlist_get_at(xs, 1)
+val x2 = xlist_get_at(xs, 2)
+val x3 = xlist_get_at(xs, 3)
+val x4 = xlist_get_at(xs, 4)
+val x5 = xlist_get_at(xs, 5)
+
+val x0_r = xlist_rget_at(xs, 0)
+val x1_r = xlist_rget_at(xs, 1)
+
+(* ****** ****** *)
+val x10 =
+SOME(xlist_get_at(xs, 10)) handle Subscript => NONE
+(* ****** ****** *)
+
 val len0 = xlist_length(xs)
 val all1 = xlist_forall(xs, fn(x:int) => x < 5)
-val all2 = xlist_forall(xs, fn(x:int) => x > 2)
+val all2 = xlist_forall(xs, fn(x:int) => x >= 1)
+val all3 = xlist_forall(xs, fn(x:int) => x >= 2)
 
 (* ****** ****** *)
 
