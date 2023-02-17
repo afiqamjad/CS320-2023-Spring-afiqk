@@ -37,8 +37,6 @@ fun list_longest_ascend(xs: int list): int list =
         |
         (x1::tl) => compare(x1::list_longest_ascend(remover(tl, x1)),list_longest_ascend(tl))
     end
-
-    val xs9 = [4, 1, 2, 1, 3, 8, 9, 5, 6, 7, 1, 1, 1, 1, 1, 1, 1]
     
 
 (* ****** ****** *)
