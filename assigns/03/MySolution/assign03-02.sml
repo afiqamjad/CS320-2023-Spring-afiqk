@@ -23,5 +23,22 @@ fun list_range(start: int, finish: int): int list
 *)
 
 (* ****** ****** *)
-
+fun list_range(start: int, finish: int): int list =
+    if start >= finish then
+        []
+    else
+        if finish - start = 1 then
+            [start]
+        else
+            let
+            val wtf = [finish - 1]
+            val x2 = finish - 2
+            fun helper(listing: int list, continuation: int): int list =
+                if continuation = start then
+                    continuation::listing
+                else
+                    helper(continuation::listing, continuation - 1)
+            in
+            helper(wtf, x2)
+            end
 (* end of [CS320-2023-Spring-assign03-02.sml] *)
