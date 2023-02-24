@@ -1,5 +1,6 @@
 (* ****** ****** *)
-
+use
+"./../../../mysmlib/mysmlib-cls.sml";
 (*
 Assign04-03:
 HX-2023-02-16: 10 point
@@ -34,11 +35,13 @@ type
 'xs * ('x0 -> bool) -> bool
 (* ****** ****** *)
 
-(*
+
 fun
 forall_to_exists
-(forall: ('xs,'x0)forall_t): ('xs,'x0)exists_t = ...
-*)
+(forall: ('xs,'x0)forall_t): ('xs,'x0)exists_t =
+    fn(xs: 'xs, test: 'x0 -> bool) => 
+    not (forall(xs, fn(x0: 'x0) => not (test(x0))))
+
 
 (* ****** ****** *)
 
