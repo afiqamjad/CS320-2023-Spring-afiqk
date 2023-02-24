@@ -12,21 +12,22 @@ the mysmlib-library for this class.
 
 (* ****** ****** *)
 
-(*
+(* ****** ****** *)
+
 fun
 isPrime(n0: int): bool =
 let
-fun
-loop(i0: int): bool =
-if
-(i0 * i0 > n0)
-then true else
-(if n0 mod i0 = 0 then false else loop(i0+1))
+  fun tester(huh: int): bool =
+      if huh < 2 then true else
+        if n0 mod huh = 0 then
+          false
+        else
+          true
 in
-  if n0 >= 2 then loop(2) else false
+  if n0 >= 2 then 
+    if int1_forall((n0 div 2) + 1, tester) then true else false
+  else
+    false
 end
-*)
-
-(* ****** ****** *)
 
 (* end of [CS320-2023-Spring-assign04-01.sml] *)
