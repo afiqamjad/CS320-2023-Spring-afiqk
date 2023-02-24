@@ -39,4 +39,13 @@ fn(xs: 'a list) => ...
 
 (* ****** ****** *)
 
+val
+list_subsets =
+fn(xs: 'a list) =>
+    let
+      fun mapper(x: 'a, y: 'a list list): 'a list list =
+        list_map(y, fn(zs) => x::zs)
+    in
+      list_reduce_left(xs, [[]], fn(res, x) => res @ mapper(x, res))
+    end
 (* end of [CS320-2023-Spring-assign04-02.sml] *)
