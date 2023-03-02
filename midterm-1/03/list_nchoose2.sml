@@ -27,11 +27,17 @@ is insignificant.
 *)
 
 (* ****** ****** *)
+(*DONE*)
 
-(*
 fun
-list_nchoose2(xs: int list): (int * int) list = ...
-*)
+list_nchoose2(xs: int list): (int * int) list =
+    let
+      val listEnd = list_filter(list_append(list_cross2_col(xs,xs), list_cross2_row(xs,xs)), fn(x) => #1(x) <= #2(x) andalso #1(x) <> #2(x))
+    in
+      list_reduce_left(list_filter(list_append(list_cross2_col(xs,xs), list_cross2_row(xs,xs)), fn(x) => #1(x) <= #2(x) andalso #1(x) <> #2(x)),
+      [], fn(acc, x) => if list_length(acc) = (list_length(listEnd) div 2) then acc else x::acc)
+    end
+
 
 (* ****** ****** *)
 

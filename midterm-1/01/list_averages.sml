@@ -30,10 +30,18 @@ functions in your implementation of list_averages.
 //
 *)
 (* ****** ****** *)
-(*
+
 fun
-list_averages(xs: real list): real list = ...
-*)
+list_averages(xs: real list): real list = 
+      case xs of
+    nil => []
+    |
+    x::nil => [x]
+    |
+    x::xs => list_append(, [(x + list_get_at(list_averages(xs), 0)) / int2real(list_length(xs))])
+
+    
+
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-midterm1-list_averages.sml] *)

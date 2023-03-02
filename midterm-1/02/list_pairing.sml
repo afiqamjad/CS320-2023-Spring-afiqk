@@ -25,11 +25,12 @@ list_pairing([1,2,3,4]) = ([(1,4),(2,3)], NONE)
 //
 *)
 (* ****** ****** *)
-(*
+
 fun
 list_pairing
-(xs: 'a list): ('a * 'a) list * 'a option = ...
-*)
+(xs: 'a list): ('a * 'a) list * 'a option = 
+    
+
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-midterm1-list_pairing.sml] *)
