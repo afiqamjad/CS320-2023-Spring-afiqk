@@ -32,14 +32,19 @@ functions in your implementation of list_averages.
 (* ****** ****** *)
 
 fun
-list_averages(xs: real list): real list = 
-      case xs of
+list_averages(xs: real list): real list =
+let
+  fun
+list_averages2(xs: real list): real list =
+    case list_reverse(xs) of
     nil => []
     |
     x::nil => [x]
     |
-    x::xs => list_append(, [(x + list_get_at(list_averages(xs), 0)) / int2real(list_length(xs))])
-
+    x::xs => ((list_foldleft(xs, x, fn(acc, x) => acc+x)) / int2real(list_length(x::xs)))::list_averages2(list_reverse(xs))
+in
+  list_reverse(list_averages2(xs))
+end
     
 
 (* ****** ****** *)
