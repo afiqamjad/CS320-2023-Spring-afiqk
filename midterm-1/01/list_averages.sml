@@ -30,7 +30,7 @@ functions in your implementation of list_averages.
 //
 *)
 (* ****** ****** *)
-
+(*DONE*)
 fun
 list_averages(xs: real list): real list =
 let
