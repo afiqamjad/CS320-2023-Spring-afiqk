@@ -23,11 +23,12 @@ two seconds)
 *)
 (* ****** ****** *)
 
-(*
 fun
-list_grouping(xs: int list): (int * int) list = ...
-*)
+list_grouping(xs: int list): (int * int) list =
+    list_foldleft(list_foldleft(xs, [], fn(acc, x) => if not(list_exists(list_concat(acc), fn(a) => a = x)) then list_filter(xs, fn(y) => x = y)::acc else acc)
 
+ , [], fn(acc, x) => (list_length(x), list_get_at(x,0))::acc)
+    
 (* ****** ****** *)
 
 (*
