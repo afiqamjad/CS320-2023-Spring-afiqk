@@ -61,6 +61,22 @@ the previous.
 fun
 magic_triangle (n : int) : int list list = ...
 *)
+(*DONE*)
+
+fun magic_triangle(n: int): int list list =
+  if n = 0 then [[1]]
+  else
+  let
+    fun helper(bruh: int list): int list =
+      case bruh of
+      [] => []
+      |
+      x::nil => [x]
+      |
+      x::xs => (x+(list_get_at(xs, 0)))::helper(xs)
+  in
+   list_append(magic_triangle(n-1),[1::helper(list_get_at(magic_triangle(n-1), n-1))])
+  end
 
 (* ****** ****** *)
 
