@@ -107,15 +107,17 @@ andalso bintr_size(tl) = bintr_size(tr)
 *)
 (* ****** ****** *)
 
-(*
+
 val
-bintr_balanced_nonrec = fn(t0: 'a bintr) => ...
-*)
+bintr_balanced_nonrec = fn(t0: 'a bintr) =>
+case t0 of
+LEAF(x0) => true
+|
+NODE(tl, tr) => if bintr_size(tl) = bintr_size(tr) then true else false
+
 
 (* ****** ****** *)
-
 (*
-Some testing code:
 val t0 = LEAF(0)
 val t1 = NODE(t0, t0)
 val t2 = NODE(t1, t1)
