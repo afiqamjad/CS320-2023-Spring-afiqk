@@ -49,6 +49,7 @@ Please give an implementation of word_neighbors.
 Note that you are NOT allowed to define recursive functions
 in your implementation
 //
+
 *)
 
 (* ****** ****** *)
@@ -68,4 +69,6 @@ foreach_to_map_list(string_iforeach)(cs, ifopr)
 
 (* ****** ****** *)
 
+fun word_neighbors(word: string): string list = 
+    
 (* end of [CS320-2023-Spring-midterm1-word_neighbors.sml] *)
