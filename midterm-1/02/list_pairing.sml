@@ -25,10 +25,11 @@ list_pairing([1,2,3,4]) = ([(1,4),(2,3)], NONE)
 //
 *)
 (* ****** ****** *)
-
 fun
 list_pairing
-(xs: 'a list): ('a * 'a) list * 'a option = 
+(xs: 'a list): ('a * 'a) list * 'a option =
+    (list_foldleft(list_zip2(xs, list_reverse(xs)), [], fn (acc, x) => if list_length(acc) < (list_length(xs) div 2) then x::acc else acc),
+    if list_length(xs) mod 2 = 0 then NONE else SOME(list_get_at(xs, list_length(xs) div 2)))
     
 
 (* ****** ****** *)
