@@ -60,7 +60,7 @@ def image_copy(image):
 #     hh = image.height
 #     return \
 #         imgvec.image_make_pylist\
-#         (??, ??, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, ??????, ??????)))
+#         (ww, hh, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, ij%ww, ij)))
 ####################################################
 # balloons = \
 #     load_color_image\
