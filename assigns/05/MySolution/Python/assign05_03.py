@@ -241,10 +241,10 @@ def single_seam(image):
 
 def idktbh(image, pix, x, y):
     if y % 500 == 0:
-        return pix + min(func_image_pixel_zero(image, x, y)(-1, -(image.width)), func_image_pixel_zero(image, x, y)(-1,-(image.width) + 1))
+        return pix + min(func_image_pixel_zero(image, x, y)(-1, 0), func_image_pixel_zero(image, x, y)(-1,1))
     if y % 499 == 0 or (y -1) % 499 == 0:
-        return pix + min(func_image_pixel_zero(image, x, y)(-1 ,-(image.width)), func_image_pixel_zero(image, x, y)(-1 ,-(image.width) - 1))
-    return pix + min(func_image_pixel_zero(image, x, y)(-1 ,-(image.width)), func_image_pixel_zero(image, x, y)(-1 , -(image.width) + 1), func_image_pixel_zero(image, x, y)(-1 , -(image.width) - 1))
+        return pix + min(func_image_pixel_zero(image, x, y)(-1 ,0), func_image_pixel_zero(image, x, y)(-1 , -1))
+    return pix + min(func_image_pixel_zero(image, x, y)(-1 ,0), func_image_pixel_zero(image, x, y)(-1 , 1), func_image_pixel_zero(image, x, y)(-1 , -1))
 
 balloons = \
     load_color_image\
@@ -252,9 +252,8 @@ balloons = \
 
 balloons_2 = image_seam_carving_color(balloons, 0)
 
-print(balloons_2.pixlst[0:2])
-print(image_get_pixel(balloons_2, 1, 0))
-print(idktbh(balloons_2, image_get_pixel(balloons_2, 1, 0), 1, 0))
+print(balloons_2.pixlst[500:1000])
+print(single_seam(balloons_2).pixlst[500:1000])
 
 
 ####################################################
