@@ -74,13 +74,13 @@ def image_invert_color(ximg):
 #
 # towers = \
 #     load_color_image("INPUT/towers.jpg")
-# balloons = \
-#     load_color_image("INPUT/balloons.png")
+#balloons = \
+#     load_color_image("assigns/05/MySolution/Python/INPUT/balloons.png")
 #
 ####################################################
 #
 # save_color_image(image_invert_color(towers), "OUTPUT/towers_invert.png")
-# save_color_image(image_invert_color(balloons), "OUTPUT/balloons_invert.png")
+# save_color_image(image_invert_color(balloons), "assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
 #
 ####################################################
 
@@ -147,15 +147,101 @@ def image_blur_bbehav_color(image, ksize, bbehav):
 # save_color_image\
 #    (image_blur_bbehav_color(balloons, 5, 'extend'), "OUTPUT/balloons_blurred.png")
 ####################################################
+def image_get_pixel(image, i, j):
+    return image.pixlst[i*image.width+j]
+
+def one_energy_row(img,x):
+    bruh = []
+    for i in range(img.width):
+        bruh.append(image_get_pixel(img, x, i))
+    return bruh
+
+class image:
+    def __init__(self, hh, ww, pixlst):
+        self.width = ww
+        self.height = hh
+        self.pixlst = pixlst
+        # print("pixlst = ", pixlst)
+        return None
+def image_foreach(image, work_func):
+    for pix in image.pixlst: work_func(pix)
+    return None # end-of(image_foreach(image, work_func))
+def image_make_pylist(hh, ww, pixlst):
+    assert(hh * ww == len(pixlst))
+    return image(hh, ww, tuple(pixlst))
+def image_map_pylist(image, fopr_func):
+    return foreach_to_map_pylist(image_foreach)(image, fopr_func)
+
+def image_make_map(image, fopr_func):
+    ww = image.width
+    hh = image.height
+    return image_make_pylist\
+        (hh, ww, image_map_pylist(image, fopr_func))
+def image_iforeach(image, iwork_func):
+    for (i0, pix) in enumerate(image.pixlst):
+        iwork_func(i0, pix)
+    return None
+def image_make_imap(image, ifopr_func):
+    ww = image.width
+    hh = image.height
+    return image_make_pylist\
+        (hh, ww, image_imap_pylist(image, ifopr_func))
+def image_imap_pylist(image, ifopr_func):
+    return iforeach_to_imap_pylist(image_iforeach)(image, ifopr_func)
 
 def image_seam_carving_color(image, ncol):
     """
     Starting from the given image, use the seam carving technique to remove
     ncols (an integer) columns from the image. Returns a new image.
     """
+    
+ 
     assert ncol < image.width
-    energy = image_edges_color(image)
-    raise NotImplementedError
+
+    #results in an image with outlines (computed energy map).
+    save_color_image(image_invert_color(image), "assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
+    balloons2 = \
+    load_color_image("assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
+    energy = image_edges_color(balloons2)
+    #go through each row
+    acc = 0
+    testing = image_make_imap(energy, lambda acc, x:  acc and x )
+    #based off at most three elements from prev row, change the value of the curr elemnt.
+    #retrack after hitting the bottom
+
+    return testing
+
+balloons = \
+    load_color_image\
+    ("assigns/05\MySolution\Python\INPUT/balloons.png")
+
+balloons_1 = image_seam_carving_color(balloons, 0)
+
+
+
+def func_image_pixel_zero(image, x, y):
+    """
+    Given an image and integers x and y, returns a function that takes
+    two integers i and j and returns the value of the pixel at position
+    (x+i, y+j). Handles boundary cases according to boundary behavior 'zero'.
+    """
+    ww = image.width
+    hh = image.height
+    
+    def func(i, j):
+        xi = x + i
+        yj = y + j
+        if xi < 0 or xi >= hh:
+            return 0
+        if yj < 0 or yj >= ww:
+            return 0
+        return image_get_pixel(image, xi, yj)
+
+    return lambda i, j: func(i, j)
+
+print(balloons_1.pixlst[0:5])
+
+
 
 ####################################################
 # save_color_image(image_seam_carving_color(balloons, 100), "OUTPUT/balloons_seam_carving_100.png")
