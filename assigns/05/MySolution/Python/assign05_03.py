@@ -2,6 +2,7 @@
 #!/usr/bin/env python3
 ####################################################
 import sys
+print(sys.executable)
 sys.path.append('./../../../05')
 sys.path.append('./../../../../mypylib')
 from mypylib_cls import *
@@ -188,37 +189,6 @@ def image_make_imap(image, ifopr_func):
         (hh, ww, image_imap_pylist(image, ifopr_func))
 def image_imap_pylist(image, ifopr_func):
     return iforeach_to_imap_pylist(image_iforeach)(image, ifopr_func)
-
-def image_seam_carving_color(image, ncol):
-    """
-    Starting from the given image, use the seam carving technique to remove
-    ncols (an integer) columns from the image. Returns a new image.
-    """
-    
- 
-    assert ncol < image.width
-
-    #results in an image with outlines (computed energy map).
-    save_color_image(image_invert_color(image), "assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
-    balloons2 = \
-    load_color_image("assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
-    energy = image_edges_color(balloons2)
-    #go through each row
-    acc = 0
-    testing = image_make_imap(energy, lambda acc, x:  acc and x )
-    #based off at most three elements from prev row, change the value of the curr elemnt.
-    #retrack after hitting the bottom
-
-    return testing
-
-balloons = \
-    load_color_image\
-    ("assigns/05\MySolution\Python\INPUT/balloons.png")
-
-balloons_1 = image_seam_carving_color(balloons, 0)
-
-
-
 def func_image_pixel_zero(image, x, y):
     """
     Given an image and integers x and y, returns a function that takes
@@ -239,8 +209,52 @@ def func_image_pixel_zero(image, x, y):
 
     return lambda i, j: func(i, j)
 
-print(balloons_1.pixlst[0:5])
+def image_iforeach(image, iwork_func):
+    for (i0, pix) in enumerate(image.pixlst):
+        iwork_func(i0, pix)
+    return None
 
+####################################################
+
+def image_seam_carving_color(image, ncol):
+    """
+    Starting from the given image, use the seam carving technique to remove
+    ncols (an integer) columns from the image. Returns a new image.
+    """
+    
+ 
+    assert ncol < image.width
+
+    #results in an image with outlines (computed energy map).
+    save_color_image(image_invert_color(image), "assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
+    balloons2 = \
+    load_color_image("assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
+    energy = image_edges_color(balloons2)
+    #go through each row
+    testing = energy
+    #based off at most three elements from prev row, change the value of the curr elemnt.
+    #retrack after hitting the bottom
+
+    return testing
+def single_seam(image):
+    return image_make_imap(image, lambda y, pix: idktbh(image, pix, y // image.width, y % image.width))
+
+def idktbh(image, pix, x, y):
+    if y % 500 == 0:
+        return pix + min(func_image_pixel_zero(image, x, y)(-1, -(image.width)), func_image_pixel_zero(image, x, y)(-1,-(image.width) + 1))
+    if y % 499 == 0 or (y -1) % 499 == 0:
+        return pix + min(func_image_pixel_zero(image, x, y)(-1 ,-(image.width)), func_image_pixel_zero(image, x, y)(-1 ,-(image.width) - 1))
+    return pix + min(func_image_pixel_zero(image, x, y)(-1 ,-(image.width)), func_image_pixel_zero(image, x, y)(-1 , -(image.width) + 1), func_image_pixel_zero(image, x, y)(-1 , -(image.width) - 1))
+
+balloons = \
+    load_color_image\
+    ("assigns/05\MySolution\Python\INPUT/balloons.png")
+
+balloons_2 = image_seam_carving_color(balloons, 0)
+
+print(balloons_2.pixlst[0:2])
+print(image_get_pixel(balloons_2, 1, 0))
+print(idktbh(balloons_2, image_get_pixel(balloons_2, 1, 0), 1, 0))
 
 
 ####################################################
