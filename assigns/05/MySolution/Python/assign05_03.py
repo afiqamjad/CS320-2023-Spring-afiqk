@@ -213,8 +213,74 @@ def image_iforeach(image, iwork_func):
     for (i0, pix) in enumerate(image.pixlst):
         iwork_func(i0, pix)
     return None
-
+def image_make_pylist(hh, ww, pixlst):
+    assert(hh * ww == len(pixlst))
+    return image(hh, ww, tuple(pixlst))
 ####################################################
+def single_seam(image):
+    cenergy = []
+    lister = {}
+    for i in range(0, image.width):
+        cenergy.append(image.pixlst[i])
+        lister[(0,i)] =  None
+    for i in range(image.width, len(image.pixlst)):
+        minval, coords = idktbh(cenergy, image, image.pixlst[i], i // image.width, i % image.width)
+        cenergy.append(minval)
+        lister[(i // image.width, i % image.width)] = coords
+    return cenergy, lister
+
+def idktbh(energy, image, pix, x, y):
+    if y % image.width == 0:
+        min1 = energy[((x-1)*image.width)+y]
+        min2 = energy[((x-1)*image.width)+y+1]
+        if min1 == min2:
+            minval = min1
+            coords = (x-1, y)
+        else:
+            minval = min(min1,min2)
+            if minval == min1:
+                coords = (x-1, y)
+            else:
+                coords = (x-1, y+1)
+        return pix + minval, coords
+    if y % image.width - 1 == 0:
+        min1 = energy[((x-1)*image.width)+y]
+        min2 = energy[((x-1)*image.width)+y-1]
+        if min1 == min2:
+            minval = min2
+            coords = (x-1, y-1)
+        else:
+            minval = min(min1,min2)
+            if minval == min1:
+                coords = (x-1, y)
+            else:
+                coords = (x-1, y-1)
+        return pix + minval, coords
+    min1 = energy[((x-1)*image.width)+y]
+    min2 = energy[((x-1)*image.width)+y+1]
+    min3 = energy[((x-1)*image.width)+y-1]
+    if min1 == min2 and min2 == min3:
+        minval = min3
+        coords = (x-1, y-1)
+    elif min1 == min2 and (min1 < min3):
+        minval = min1
+        coords = (x-1, y)
+    elif min1 == min3 and (min1 < min2):
+        minval = min3
+        coords = (x-1, y-1)
+    elif min2 == min3 and (min3 < min1):
+        minval = min3
+        coords = (x-1, y-1)
+    else:
+        minval = min(min1,min2,min3)
+        if minval == min1:
+                coords = (x-1, y)
+        elif minval == min2:
+                coords = (x-1, y+1)
+        else:
+                coords = (x-1, y-1)
+    return pix + minval, coords
+
 
 def image_seam_carving_color(image, ncol):
     """
@@ -222,39 +288,58 @@ def image_seam_carving_color(image, ncol):
     ncols (an integer) columns from the image. Returns a new image.
     """
     
- 
+    inverted = image_edges_color(image)
     assert ncol < image.width
-
-    #results in an image with outlines (computed energy map).
-    save_color_image(image_invert_color(image), "assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
-    balloons2 = \
-    load_color_image("assigns/05/MySolution/Python/OUTPUT/balloons_invert.png")
-    energy = image_edges_color(balloons2)
-    #go through each row
-    testing = energy
-    #based off at most three elements from prev row, change the value of the curr elemnt.
-    #retrack after hitting the bottom
-
-    return testing
-def single_seam(image):
-    return image_make_imap(image, lambda y, pix: idktbh(image, pix, y // image.width, y % image.width))
-
-def idktbh(image, pix, x, y):
-    if y % 500 == 0:
-        return pix + min(func_image_pixel_zero(image, x, y)(-1, 0), func_image_pixel_zero(image, x, y)(-1,1))
-    if y % 499 == 0 or (y -1) % 499 == 0:
-        return pix + min(func_image_pixel_zero(image, x, y)(-1 ,0), func_image_pixel_zero(image, x, y)(-1 , -1))
-    return pix + min(func_image_pixel_zero(image, x, y)(-1 ,0), func_image_pixel_zero(image, x, y)(-1 , 1), func_image_pixel_zero(image, x, y)(-1 , -1))
+    for i in range(ncol):
+        energy, lister = single_seam(inverted)
+        seamsList = seams(image, energy, lister)
+        newImage = removeSeam(balloons, seamsList)
+    return newImage
+    
 
 balloons = \
     load_color_image\
     ("assigns/05\MySolution\Python\INPUT/balloons.png")
 
-balloons_2 = image_seam_carving_color(balloons, 0)
 
-print(balloons_2.pixlst[500:1000])
-print(single_seam(balloons_2).pixlst[500:1000])
+#print(image_edges_color(balloons).pixlst)
+def seams(image, energy, lister):
+    bruh = []
+    coords = (0,0)
+    minval = 99999999
+    counter = 0
+    for i in energy[(image.height-1)*image.width:((image.height-1)*image.width)+image.width]:
+        if i < minval:
+            minval = i
+            coords = (image.height-1, counter)
+        counter = counter + 1
+    bruh.append(coords[1])
+    while lister[coords] != None:
+        coords = lister[coords]
+        bruh.append(coords[1])
+    return bruh
 
+energy, lister = single_seam(image_edges_color(balloons))
+
+
+def removeSeam(image, bruh):
+    return imgvec.image_make_pylist\
+ (image.height, image.width, imgvec.image_i2map_pylist(image, lambda i0, j0, v0: v0 if bruh[i0] != j0 else (255, 255, 255)))
+
+save_color_image(image_seam_carving_color(balloons, 5), "assigns/05\MySolution\Python\OUTPUT/balloons_maybehuh2.png")
+
+
+#print(balloons_2.pixlst[500:1000])
+#print(single_seam(balloons_2).pixlst[500:1000])
+
+#print(image_get_pixel(single_seam(balloons_2), 1, 249))
+#print(min(single_seam(balloons_2).pixlst[500:1000]))
+#print(single_seam(balloons_2).pixlst[500:1000][249])
+#print(pylist_iminimum(single_seam(balloons_2).pixlst[500:1000]))
+
+#print(balloons_2.pixlst[(balloons_2.height - 1) * balloons_2.width:((balloons_2.height - 1) * balloons_2.width) + balloons_2.width])
+#print(min(balloons_2.pixlst[(balloons_2.height - 1) * balloons_2.width:((balloons_2.height - 1) * balloons_2.width) + balloons_2.width]))
+#print(goThrough(balloons_2.pixlst[(balloons_2.height - 1) * balloons_2.width:((balloons_2.height - 1) * balloons_2.width) + balloons_2.width]))
 
 ####################################################
 # save_color_image(image_seam_carving_color(balloons, 100), "OUTPUT/balloons_seam_carving_100.png")
