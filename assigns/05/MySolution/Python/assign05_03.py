@@ -148,74 +148,6 @@ def image_blur_bbehav_color(image, ksize, bbehav):
 # save_color_image\
 #    (image_blur_bbehav_color(balloons, 5, 'extend'), "OUTPUT/balloons_blurred.png")
 ####################################################
-def image_get_pixel(image, i, j):
-    return image.pixlst[i*image.width+j]
-
-def one_energy_row(img,x):
-    bruh = []
-    for i in range(img.width):
-        bruh.append(image_get_pixel(img, x, i))
-    return bruh
-
-class image:
-    def __init__(self, hh, ww, pixlst):
-        self.width = ww
-        self.height = hh
-        self.pixlst = pixlst
-        # print("pixlst = ", pixlst)
-        return None
-def image_foreach(image, work_func):
-    for pix in image.pixlst: work_func(pix)
-    return None # end-of(image_foreach(image, work_func))
-def image_make_pylist(hh, ww, pixlst):
-    assert(hh * ww == len(pixlst))
-    return image(hh, ww, tuple(pixlst))
-def image_map_pylist(image, fopr_func):
-    return foreach_to_map_pylist(image_foreach)(image, fopr_func)
-
-def image_make_map(image, fopr_func):
-    ww = image.width
-    hh = image.height
-    return image_make_pylist\
-        (hh, ww, image_map_pylist(image, fopr_func))
-def image_iforeach(image, iwork_func):
-    for (i0, pix) in enumerate(image.pixlst):
-        iwork_func(i0, pix)
-    return None
-def image_make_imap(image, ifopr_func):
-    ww = image.width
-    hh = image.height
-    return image_make_pylist\
-        (hh, ww, image_imap_pylist(image, ifopr_func))
-def image_imap_pylist(image, ifopr_func):
-    return iforeach_to_imap_pylist(image_iforeach)(image, ifopr_func)
-def func_image_pixel_zero(image, x, y):
-    """
-    Given an image and integers x and y, returns a function that takes
-    two integers i and j and returns the value of the pixel at position
-    (x+i, y+j). Handles boundary cases according to boundary behavior 'zero'.
-    """
-    ww = image.width
-    hh = image.height
-    
-    def func(i, j):
-        xi = x + i
-        yj = y + j
-        if xi < 0 or xi >= hh:
-            return 0
-        if yj < 0 or yj >= ww:
-            return 0
-        return image_get_pixel(image, xi, yj)
-
-    return lambda i, j: func(i, j)
-
-def image_iforeach(image, iwork_func):
-    for (i0, pix) in enumerate(image.pixlst):
-        iwork_func(i0, pix)
-    return None
-def image_make_pylist(hh, ww, pixlst):
-    assert(hh * ww == len(pixlst))
-    return image(hh, ww, tuple(pixlst))
 ####################################################
 def single_seam(image):
     cenergy = []
@@ -281,28 +213,6 @@ def idktbh(energy, image, pix, x, y):
                 coords = (x-1, y-1)
     return pix + minval, coords
 
-
-def image_seam_carving_color(image, ncol):
-    """
-    Starting from the given image, use the seam carving technique to remove
-    ncols (an integer) columns from the image. Returns a new image.
-    """
-    
-    inverted = image_edges_color(image)
-    assert ncol < image.width
-    for i in range(ncol):
-        energy, lister = single_seam(inverted)
-        seamsList = seams(image, energy, lister)
-        newImage = removeSeam(balloons, seamsList)
-    return newImage
-    
-
-balloons = \
-    load_color_image\
-    ("assigns/05\MySolution\Python\INPUT/balloons.png")
-
-
-#print(image_edges_color(balloons).pixlst)
 def seams(image, energy, lister):
     bruh = []
     coords = (0,0)
@@ -319,28 +229,42 @@ def seams(image, energy, lister):
         bruh.append(coords[1])
     return bruh
 
-energy, lister = single_seam(image_edges_color(balloons))
-
-
 def removeSeam(image, bruh):
-    return imgvec.image_make_pylist\
- (image.height, image.width, imgvec.image_i2map_pylist(image, lambda i0, j0, v0: v0 if bruh[i0] != j0 else (255, 255, 255)))
-
-save_color_image(image_seam_carving_color(balloons, 5), "assigns/05\MySolution\Python\OUTPUT/balloons_maybehuh2.png")
+   return imgvec.image_make_pylist\
+ (image.height, image.width-1, imgvec.image_i2filter_pylist(image, lambda i0, j0, _: bruh[i0] != j0))
 
 
-#print(balloons_2.pixlst[500:1000])
-#print(single_seam(balloons_2).pixlst[500:1000])
+def image_seam_carving_color(image, ncol):
+    """
+    Starting from the given image, use the seam carving technique to remove
+    ncols (an integer) columns from the image. Returns a new image.
+    """
+    
+    assert ncol < image.width
+    hmm = image
+    i =  0
+    while i < ncol:
+        hmm = one_carve(hmm)
+        i = i + 1
+    return hmm
+    
+def one_carve(image):
+    inverted = image_edges_color(image)
+    energy, lister = single_seam(inverted)
+    seamsList = seams(image, energy, lister)
+    seamsList.reverse()
+    newImage = removeSeam(image, seamsList)
+    return newImage
+    
 
-#print(image_get_pixel(single_seam(balloons_2), 1, 249))
-#print(min(single_seam(balloons_2).pixlst[500:1000]))
-#print(single_seam(balloons_2).pixlst[500:1000][249])
-#print(pylist_iminimum(single_seam(balloons_2).pixlst[500:1000]))
+balloons = \
+    load_color_image\
+    ("assigns/05\MySolution\Python\INPUT/balloons.png")
 
-#print(balloons_2.pixlst[(balloons_2.height - 1) * balloons_2.width:((balloons_2.height - 1) * balloons_2.width) + balloons_2.width])
-#print(min(balloons_2.pixlst[(balloons_2.height - 1) * balloons_2.width:((balloons_2.height - 1) * balloons_2.width) + balloons_2.width]))
-#print(goThrough(balloons_2.pixlst[(balloons_2.height - 1) * balloons_2.width:((balloons_2.height - 1) * balloons_2.width) + balloons_2.width]))
+inverted = image_edges_color(balloons)
+energy, lister = single_seam(inverted)
+seamsList =  seams(balloons, energy, lister)
+seamsList.reverse()
+print(energy[312*500 + 2: (312*500)+500])
 
-####################################################
-# save_color_image(image_seam_carving_color(balloons, 100), "OUTPUT/balloons_seam_carving_100.png")
-####################################################
+print(seamsList)
