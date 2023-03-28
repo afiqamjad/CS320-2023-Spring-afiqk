@@ -19,9 +19,10 @@ And so on, and so forth
 
 (* ****** ****** *)
 
-(*
-val the_ln2_stream: real stream = fn() => ...
-*)
+val the_ln2_stream: real stream = fn() =>
+    
+
+
 
 (* ****** ****** *)
 
