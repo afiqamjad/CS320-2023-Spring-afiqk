@@ -48,28 +48,11 @@ def save_color_image(image, filename, mode="PNG"):
     # return None
 
 ####################################################
-def image_copy(image):
-    ww = image.width
-    hh = image.height
-    return \
-        imgvec.image_make_pylist\
-        (hh, ww, \
-         int1_map_pylist\
-         (hh*ww, lambda ij: imgvec.image_get_pixel(image, ij//ww, ij%ww)))
-####################################################
-def image_hreflect(image):
-    ww = image.width
-    hh = image.height
-    return \
-         imgvec.image_make_i2map\
-         (image, \
-          lambda i0, j0, v0: \
-          imgvec.image_get_pixel(image, (i0*ww+j0)//ww, ww-1-(i0*ww+j0)%ww))
-####################################################
 def image_vreflect(image):
     ww = image.width
     hh = image.height
     return \
+<<<<<<< HEAD:quizzes/part-03-28/part_03_28.py
          imgvec.image_make_i2map\
          (image, \
           lambda i0, j0, v0: \
@@ -103,4 +86,20 @@ def image_rotate_180r(image):
         imgvec.image_make_pylist\
         (hh, ww, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, hh-1-ij//ww, ww-1-(ij)%ww)))
 ####################################################
+=======
+        imgvec.image_make_i2map\
+        (image, \
+         lambda i0, j0, v0: imgvec.image_get_pixel(image, ??????, ??????))
+####################################################
+# balloons = \
+#     load_color_image\
+#     ("./../../assigns/05/MySolution/Python/INPUT/balloons.png")
+# save_color_image(image_copy(balloons), "balloons_copy.png")
+# save_color_image(image_hreflect(balloons), "balloons_hrefl.png")
+# save_color_image(image_vreflect(balloons), "balloons_vrefl.png")
+# save_color_image(image_transpose(balloons), "balloons_trans.png")
+# save_color_image(image_rotate_090l(balloons), "balloons_090l.png")
+# save_color_image(image_rotate_090r(balloons), "balloons_090r.png")
+# save_color_image(image_rotate_180r(balloons), "balloons_180r.png")
+>>>>>>> upstream/main:quizzes/part-03-30/part_03_30.py
 ####################################################
