@@ -12,7 +12,7 @@ Solving the N-queen puzzle
 """
 ####################################################
 
-def gtree_dfs(nxs, fchildren):
+def gtree_dfs(cnxs, fchildren):
     def helper(nxs):
         if nxs.empty():
             return strcon_nil()
@@ -21,7 +21,25 @@ def gtree_dfs(nxs, fchildren):
             for nx2 in reversed(fchildren(nx1)):
                 nxs.put(nx2)
             return strcon_cons(nx1, lambda: helper(nxs))
+    nxs = LifoQueue()
+    for nx1 in cnxs:
+        nxs.put(nx1)
     return lambda: helper(nxs)
+
+# initialize stream with [0,0,0,0,....] where array is size N
+# add children of the current array to stream
+# go to first child, and add all valid children into the stream
+#     - valid means that check condition compared to the queens in rows before it
+#         - to do this check if its same number, or if the diff between cols and rows are equak (therefore diagonal)
+# iterate until all indices are filled
+# return
+# filter solutions
+
+def initial(N):
+    lst = []
+    for i in range(N):
+        lst[i] = 0
+    return strcon_cons(lst, strcon_nil())
 
 
 # fun
@@ -57,7 +75,7 @@ def gtree_dfs(nxs, fchildren):
 #         work(x4); work(x5); work(x6); work(x7)
 #     end
 def board_foreach(bd, work):
-    
+    return
     
 
 ##########################################################
@@ -66,6 +84,8 @@ def board_foreach(bd, work):
 # board_get_at =
 # fn(bd: board_t, i: int) =>
 #     foreach_to_get_at(board_foreach)(bd, i)
+def board_get_at(bd, i):
+    
 
 ##########################################################
 
