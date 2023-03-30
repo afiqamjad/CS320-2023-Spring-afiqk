@@ -52,44 +52,9 @@ def image_vreflect(image):
     ww = image.width
     hh = image.height
     return \
-<<<<<<< HEAD:quizzes/part-03-28/part_03_28.py
-         imgvec.image_make_i2map\
-         (image, \
-          lambda i0, j0, v0: \
-          imgvec.image_get_pixel(image, hh-1-(i0*ww+j0)//ww, (i0*ww+j0)%ww))
-####################################################
-def image_transpose(image):
-    ww = image.width
-    hh = image.height
-    return \
-        imgvec.image_make_pylist\
-        (ww, hh, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, ij%hh, ij//hh)))
-####################################################
-def image_rotate_090l(image):
-    ww = image.width
-    hh = image.height
-    return \
-        imgvec.image_make_pylist\
-        (ww, hh, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, ij%hh, ww-1-ij//hh)))
-####################################################
-def image_rotate_090r(image):
-    ww = image.width
-    hh = image.height
-    return \
-        imgvec.image_make_pylist\
-        (ww, hh, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, hh-1-ij%hh, ij//hh)))
-####################################################
-def image_rotate_180r(image):
-    ww = image.width
-    hh = image.height
-    return \
-        imgvec.image_make_pylist\
-        (hh, ww, int1_map_pylist(hh*ww, lambda ij: imgvec.image_get_pixel(image, hh-1-ij//ww, ww-1-(ij)%ww)))
-####################################################
-=======
         imgvec.image_make_i2map\
         (image, \
-         lambda i0, j0, v0: imgvec.image_get_pixel(image, ??????, ??????))
+         lambda i0, j0, v0: imgvec.image_get_pixel(image, hh-1-i0, j0))
 ####################################################
 # balloons = \
 #     load_color_image\
@@ -101,5 +66,4 @@ def image_rotate_180r(image):
 # save_color_image(image_rotate_090l(balloons), "balloons_090l.png")
 # save_color_image(image_rotate_090r(balloons), "balloons_090r.png")
 # save_color_image(image_rotate_180r(balloons), "balloons_180r.png")
->>>>>>> upstream/main:quizzes/part-03-30/part_03_30.py
 ####################################################
