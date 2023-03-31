@@ -13,9 +13,17 @@ if i1+j1 < i2+j2.
 
 (* ****** ****** *)
 
-(*
-val theNatPairs: (int*int) stream = fn () => ...
-*)
+val theNatPairs: (int*int) stream = fn () =>
+    let
+      fun loop(i, j) = strcon_cons((i, j), fn() =>
+        if j = 0 then 
+            loop(0, i + 1)
+        else 
+            loop(i + 1, j - 1)
+    )
+    in
+      loop(0, 0) 
+    end
 
 (* ****** ****** *)
 

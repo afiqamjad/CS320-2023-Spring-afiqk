@@ -13,43 +13,44 @@ Solving the doublet puzzle
 """
 ####################################################
 def gtree_bfs(nxs, fchlds):
-    i = 0
-    bruh = {}
-    def helper(qnxs, intz):
+    def helper(qnxs):
         if qnxs.empty():
             return strcon_nil()
         else:
             nx1 = qnxs.get()
             # print("gtree_bfs: helper: nx1 = ", nx1)
-            for nx2 in fchlds(nx1, intz):
-                if not( nx2 in bruh): 
+            for nx2 in fchlds(nx1[-1], nx1): 
                     qnxs.put(nx2)
-                    bruh[nx2] = 0
-            return strcon_cons(nx1, lambda: helper(qnxs, i+1))
+            return strcon_cons(tuple(nx1), lambda: helper(qnxs))
         # end-of-(if(qnxs.empty())-then-else)
     qnxs = queue.Queue()
     for nx1 in nxs:
-        qnxs.put(nx1)
-        bruh[nx1] = 0
-    return lambda: helper(qnxs, 0)
+        qnxs.put([nx1])
+    return lambda: helper(qnxs)
 
 def alphabet():
     return "abcdefghijklmnopqrstuvwxyz"
 
 def checker(word):
-    if word_is_legal(word):
-        return True
-    return False
+    return word_is_legal(word)
+    
 
-def get_children(word, intz):
+def get_children(word, lst):
     temp = ""
-    lst = [word]
-    for i in range(intz, len(word)):
+    lst2 = []
+    for i in range(len(word)):
         for j in alphabet():
-            temp = word.replace(word[i], j)
+            if i == 0:
+                temp = j + word[1:]
+            elif i == len(word) - 1:
+                temp = word[:len(word) - 1] + j
+            else:
+                temp = word[:i] + j + word[i+1:]
             if checker(temp) and temp != word:
                 lst.append(temp)
-    return lst
+                lst2.append(lst[:])
+                lst.pop()
+    return lst2
 
 def doublet_stream_from(word):
 
@@ -57,10 +58,111 @@ def doublet_stream_from(word):
     bruh = gtree_bfs(initial, lambda x, y: get_children(x, y))
     return bruh
 
-lst1 = []
-stream_foreach(doublet_stream_from("water"), lambda x: lst1.append(x))
-
-#print(lst1[len(lst1) - 30:len(lst1) - 1])
-#print(lst1)
-print(len(stream_get_at(doublet_stream_from('water'), 324)))
+# #print(lst1[len(lst1) - 30:len(lst1) - 1])
+# #print(lst1)
+# print(len(stream_get_at(doublet_stream_from('water'), 324)))
+# print(get_children("caker", ["water", "bater", "baker", "caker"]))
 ####################################################
+# lst = [("water",),
+# ("water", "bater"),
+# ("water", "cater"),
+# ("water", "dater"),
+# ("water", "eater"),
+# ("water", "gater"),
+# ("water", "hater"),
+# ("water", "later"),
+# ("water", "mater"),
+# ("water", "pater"),
+# ("water", "rater"),
+# ("water", "tater"),
+# ("water", "wader"),
+# ("water", "wafer"),
+# ("water", "wager"),
+# ("water", "waker"),
+# ("water", "waler"),
+# ("water", "waver"),
+# ("water", "waxer"),
+# ("water", "bater", "cater"),
+# ("water", "bater", "dater"),
+# ("water", "bater", "eater"),
+# ("water", "bater", "gater"),
+# ("water", "bater", "hater"),
+# ("water", "bater", "later"),
+# ("water", "bater", "mater"),
+# ("water", "bater", "pater"),
+# ("water", "bater", "rater"),
+# ("water", "bater", "tater"),
+# ("water", "bater", "water"),
+# ("water", "bater", "biter"),
+# ("water", "bater", "baker"),
+# ("water", "bater", "baler"),
+# ("water", "bater", "barer"),
+# ("water", "bater", "batea"),
+# ("water", "bater", "bated"),
+# ("water", "bater", "batel"),
+# ("water", "cater", "bater"),
+# ("water", "cater", "dater"),
+# ("water", "cater", "eater"),
+# ("water", "cater", "gater"),
+# ("water", "cater", "hater"),
+# ("water", "cater", "later"),
+# ("water", "cater", "mater"),
+# ("water", "cater", "pater"),
+# ("water", "cater", "rater"),
+# ("water", "cater", "tater"),
+# ("water", "cater", "water"),
+# ("water", "cater", "citer"),
+# ("water", "cater", "caber"),
+# ("water", "cater", "cader"),
+# ("water", "cater", "cager"),
+# ("water", "cater", "caker"),
+# ("water", "cater", "caner"),
+# ("water", "cater", "caper"),
+# ("water", "cater", "carer"),
+# ("water", "cater", "caser"),
+# ("water", "dater", "bater"),
+# ("water", "dater", "cater"),
+# ("water", "dater", "eater"),
+# ("water", "dater", "gater"),
+# ("water", "dater", "hater"),
+# ("water", "dater", "later"),
+# ("water", "dater", "mater"),
+# ("water", "dater", "pater"),
+# ("water", "dater", "rater"),
+# ("water", "dater", "tater"),
+# ("water", "dater", "water"),
+# ("water", "dater", "deter"),
+# ("water", "dater", "diter"),
+# ("water", "dater", "doter"),
+# ("water", "dater", "daker"),
+# ("water", "dater", "daler"),
+# ("water", "dater", "darer"),
+# ("water", "dater", "daver"),
+# ("water", "eater", "bater"),
+# ("water", "eater", "cater"),
+# ("water", "eater", "dater"),
+# ("water", "eater", "gater"),
+# ("water", "eater", "hater"),
+# ("water", "eater", "later"),
+# ("water", "eater", "mater"),
+# ("water", "eater", "pater"),
+# ("water", "eater", "rater"),
+# ("water", "eater", "tater"),
+# ("water", "eater", "water"),
+# ("water", "eater", "enter"),
+# ("water", "eater", "ester"),
+# ("water", "eater", "exter"),
+# ("water", "eater", "eager"),
+# ("water", "eater", "easer"),
+# ("water", "eater", "eaver"),
+# ("water", "eater", "eaten"),
+# ("water", "gater", "bater"),
+# ("water", "gater", "cater"),
+# ("water", "gater", "dater"),
+# ("water", "gater", "eater"),
+# ("water", "gater", "hater"),
+# ("water", "gater", "later"),
+# ("water", "gater", "mater")],
+# lenz = 74
+#print(stream_get_at(doublet_stream_from('water'), 325)),
+# print(lst[0][lenz]),
