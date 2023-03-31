@@ -4,33 +4,63 @@
 import sys
 sys.path.append('./../../../../mypylib')
 from mypylib_cls import *
+from dictwords import word_is_legal
+import queue
 ####################################################
 """
 HX-2023-03-24: 30 points
 Solving the doublet puzzle
 """
 ####################################################
+def gtree_bfs(nxs, fchlds):
+    i = 0
+    bruh = {}
+    def helper(qnxs, intz):
+        if qnxs.empty():
+            return strcon_nil()
+        else:
+            nx1 = qnxs.get()
+            # print("gtree_bfs: helper: nx1 = ", nx1)
+            for nx2 in fchlds(nx1, intz):
+                if not( nx2 in bruh): 
+                    qnxs.put(nx2)
+                    bruh[nx2] = 0
+            return strcon_cons(nx1, lambda: helper(qnxs, i+1))
+        # end-of-(if(qnxs.empty())-then-else)
+    qnxs = queue.Queue()
+    for nx1 in nxs:
+        qnxs.put(nx1)
+        bruh[nx1] = 0
+    return lambda: helper(qnxs, 0)
+
+def alphabet():
+    return "abcdefghijklmnopqrstuvwxyz"
+
+def checker(word):
+    if word_is_legal(word):
+        return True
+    return False
+
+def get_children(word, intz):
+    temp = ""
+    lst = [word]
+    for i in range(intz, len(word)):
+        for j in alphabet():
+            temp = word.replace(word[i], j)
+            if checker(temp) and temp != word:
+                lst.append(temp)
+    return lst
+
 def doublet_stream_from(word):
-    """
-    Please revisit assign05_02.py.
-    ######
-    Given a word w1 and another word w2, w1 and w2 are a
-    1-step doublet if w1 and w2 differ at exactly one position.
-    For instance, 'water' and 'later' are a 1-step doublet.
-    The doublet relation is the reflexive and transitive closure
-    of the 1-step doublet relation. In other words, w1 and w2 are
-    a doublet if w1 and w2 are the first and last of a sequence of
-    words where every two consecutive words form a 1-step doublet.
-    Here is a little website where you can use to check if two words
-    for a doublet or not:
-    http://ats-lang.github.io/EXAMPLE/BUCS320/Doublets/Doublets.html
-    ######
-    Given a word, the function [doublet_stream_from] returns a stream
-    enumerating *all* the tuples such that the first element of the tuple
-    is the given word and every two consecutive words in the tuple form a
-    1-step doublet. The enumeration of tuples should be done so that shorter
-    tuples are always enumerated ahead of longer ones.
-    ######
-    """
-    raise NotImplementedError
+
+    initial = [word]
+    bruh = gtree_bfs(initial, lambda x, y: get_children(x, y))
+    return bruh
+
+lst1 = []
+stream_foreach(doublet_stream_from("water"), lambda x: lst1.append(x))
+
+#print(lst1[len(lst1) - 30:len(lst1) - 1])
+#print(lst1)
+print(len(stream_get_at(doublet_stream_from('water'), 324)))
 ####################################################
