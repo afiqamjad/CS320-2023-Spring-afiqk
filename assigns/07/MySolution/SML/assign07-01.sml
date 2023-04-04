@@ -1,6 +1,6 @@
 (* ****** ****** *)
 use
-"mysmlib-cls.sml";
+"./../../../../mysmlib/mysmlib-cls.sml";
 (* ****** ****** *)
 
 
@@ -57,16 +57,6 @@ val testing3 = looper(minLength([xs1, xs2, xs3]), [xs1, xs2, xs3] ) *)
 val two = tester2(one) *)
 fun stream_ziplst(lst: 'a stream list): 'a list stream =
         list_streamize(looper(minLength(lst), lst))
-            
-
-val xs1 =
-list_streamize[1]
-val xs2 =
-list_streamize[2,2,2]
-val xs3 =
-list_streamize[3,3]
-val fxss =
-stream_ziplst([xs1, xs2, xs3])
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-assign07-01.sml] *)
