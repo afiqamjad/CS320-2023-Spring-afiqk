@@ -1,6 +1,6 @@
 (* ****** ****** *)
 use
-"./../../../../mysmlib/mysmlib-cls.sml";
+"mysmlib-cls.sml";
 (* ****** ****** *)
 
 (*
@@ -17,6 +17,22 @@ val
 theNatPairs_cubesum: (int * int) stream = fn () =>
 //
 *)
+
+fun make_stream(n: int, j: int): (int*int) stream =
+  fn () => strcon_cons((n,j), make_stream(n, j+1))
+
+
+
+(* fun tuple_stream_make(str1: int stream, str2: int stream, n: int): int*int stream =
+  fn () => 
+    case str1() of
+      strcon_nil => strcon_nil
+      |
+      strcon_cons(x1,xs) => 
+        stream_foreach() *)
+(* 
+fun testers(n: int, lst: int stream): int*int stream =
+  fn () => strcon_cons((n, stream_get_at(lst, n)), ) *)
 
 (* ****** ****** *)
 
