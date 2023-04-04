@@ -26,6 +26,8 @@ fun stream_make(n: int): int stream =
 fun helper(intz: int, lst: 'a stream list): 'a list =
     list_foldright(lst, [], fn(x,xs) => stream_get_at(xs,intz)::x)
 
+fun looper(intz: int, lst: 'a stream list): 'a list list =
+ int1_foldright(intz, [], fn(x1, xs) => helper(x1, lst)::xs)
 (* fun tester(intz: int, lst: 'a stream list): 'a stream =
     list_get_at(lst, intz)
 
@@ -35,21 +37,28 @@ fun tester2(str: 'a stream): 'a =
 fun tester3(lst: 'a list): 'a =
     list_get_at(lst, 0) *)
 
-val xs1 =
+fun minLength(lst: 'a stream list): int =
+    list_foldright(lst, 99999 , fn(x,xs) => if stream_length(xs) < x then stream_length(xs) else x)
+
+(* val xs1 =
 list_streamize[1]
 val xs2 =
-list_streamize[2,3,4]
+list_streamize[2,3,8]
 val xs3 =
-list_streamize[3,3]
+list_streamize[3,5,7] *)
 
-val testing = helper(0, [xs1,xs2,xs3])
+(* val testing = helper(1, [xs1,xs2,xs3]) *)
+(* val testing2 = looper(1, [xs1, xs2, xs3])
+val bruh = minLength([xs1, xs2, xs3])
+val testing3 = looper(minLength([xs1, xs2, xs3]), [xs1, xs2, xs3] ) *)
+(* val huh = stream_length(xs1) *)
 
 (* val one = tester(1, [xs1, xs2, xs3])
 val two = tester2(one) *)
-(* fun stream_ziplst(lst: 'a stream list): 'a list stream = *)
-        
+fun stream_ziplst(lst: 'a stream list): 'a list stream =
+        list_streamize(looper(minLength(lst), lst))
             
-(* 
+
 val xs1 =
 list_streamize[1]
 val xs2 =
@@ -57,7 +66,7 @@ list_streamize[2,2,2]
 val xs3 =
 list_streamize[3,3]
 val fxss =
-stream_ziplst([xs1, xs2, xs3]) *)
+stream_ziplst([xs1, xs2, xs3])
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-assign07-01.sml] *)
