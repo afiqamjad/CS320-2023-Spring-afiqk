@@ -21,6 +21,8 @@ theNatPairs_cubesum: (int * int) stream = fn () =>
 fun make_stream(n: int, j: int): (int*int) stream =
   fn () => strcon_cons((n,j), make_stream(n, j+1))
 
+fun testing(n: int): (int*int) stream stream =
+  fn () => strcon_cons(make_stream(n, n), testing(n + 1))
 
 
 (* fun tuple_stream_make(str1: int stream, str2: int stream, n: int): int*int stream =
