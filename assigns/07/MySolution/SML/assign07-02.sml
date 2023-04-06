@@ -1,6 +1,6 @@
 (* ****** ****** *)
 use
-"mysmlib-cls.sml";
+"./../../../../mysmlib/mysmlib-cls.sml";
 (* ****** ****** *)
 
 (*
@@ -24,8 +24,8 @@ fun cubed(first: int): int =
 fun make_stream(n: int, j: int): (int*int) stream =
   fn () => strcon_cons((n,j), make_stream(n, j+1))
 
-fun testing(n: int): (int*int) stream stream =
-  fn () => strcon_cons(make_stream(n, n), testing(n + 1))
+(* fun testing(n: int): (int*int) stream stream =
+  fn () => strcon_cons(make_stream(n, n), testing(n + 1)) *)
 
 fun checker(bruh1: (int*int), bruh2: (int*int)): bool =
   if ((cubed(#1(bruh1)) + cubed(#2(bruh1))) <= (cubed(#1(bruh2)) + cubed(#2(bruh2)))) then
