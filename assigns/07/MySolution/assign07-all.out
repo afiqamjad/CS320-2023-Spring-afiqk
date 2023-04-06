@@ -144,7 +144,7 @@ val it = () : unit
 - use "assign07-02-test.sml";
 [opening assign07-02-test.sml]
 [opening ./../../MySolution/SML/assign07-02.sml]
-[opening mysmlib-cls.sml]
+[opening ./../../../../mysmlib/mysmlib-cls.sml]
 [autoloading]
 [library $SMLNJ-BASIS/basis.cm is stable]
 [library $SMLNJ-BASIS/(basis.cm):basis-common.cm is stable]
@@ -278,9 +278,8 @@ val stream_merge2 = fn
 val it = () : unit
 val cubed = fn : int -> int
 val make_stream = fn : int * int -> (int * int) stream
-val testing = fn : int -> (int * int) stream stream
 val checker = fn : (int * int) * (int * int) -> bool
-val merged = fn : int -> (int * int) stream
+val merged = fn : (int * int) stream * int -> (int * int) stream
 val theNatPairs_cubesum = fn : (int * int) stream
 val it = () : unit
 Assign07-02-test: the ordering test done!

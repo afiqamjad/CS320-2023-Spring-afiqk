@@ -33,12 +33,19 @@ fun checker(bruh1: (int*int), bruh2: (int*int)): bool =
   else
     false
 
-fun merged(n: int): (int*int) stream = fn() =>
-  strcon_cons((0,n), stream_merge2(make_stream(n,n), merged(n+1), fn(x,y) => checker(x,y)))
+fun merged(fxs: (int*int) stream, n: int): (int*int) stream = fn() =>
+  case fxs() of
+    strcon_nil => strcon_nil
+    |
+    strcon_cons(x1, fxs) => strcon_cons(x1, stream_merge2(make_stream(n,n), merged(fxs, n+1), fn(x,y) => checker(x,y)))
 
 val theNatPairs_cubesum: (int * int) stream = 
   (* enumerates all the pairs (i, j) of natural numbers satisfying $i <= j$ *)
-  stream_cons((0,0), merged(1))
+  let
+    val zeroes = make_stream(0,0)
+  in
+    merged(zeroes, 1)
+  end
 
 
 
