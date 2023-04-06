@@ -1,6 +1,6 @@
 (* ****** ****** *)
 use
-"./../../../../mysmlib/mysmlib-cls.sml";
+"mysmlib-cls.sml";
 (* ****** ****** *)
 
 (*
@@ -33,8 +33,46 @@ fun checker(bruh1: (int*int), bruh2: (int*int)): bool =
   else
     false
 
-fun make_merged_stream(fxs: (int*int) stream stream, x: int): (int*int) stream =
-  fn () => strcon_cons(stream_merge2(stream_get_at(fxs, 0), stream_get_at(fxs, 1)), )
+fun merged(n: int): (int*int) stream = fn() =>
+  strcon_cons((0,n), stream_merge2(make_stream(n,n), merged(n+1), fn(x,y) => checker(x,y)))
+
+val theNatPairs_cubesum: (int * int) stream = 
+  (* enumerates all the pairs (i, j) of natural numbers satisfying $i <= j$ *)
+  stream_cons((0,0), merged(1))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* fun make_merged_stream(fxs: (int*int) stream stream, x1: int) =
+  let
+    val first = stream_get_at(fxs, x1)
+    val second = stream_get_at(fxs, x1 + 1)
+    val first_merged = stream_merge2(first, second, fn(x,y) => checker(x,y))
+  in
+  fn () =>  stream_merge2(first_merged, make_merged_stream(fxs, x1 + 2)(), fn (x, y) => checker(x,y))
+  end  *)
+(* fun merged(fxs: (int*int) stream, x: int): (int*int) stream =
+fn () =>
+  case fxs of
+    strcon_nil => strcon_nil
+    |
+    strcon_cons(x1, fxs) => strcon_cons(x1, stream_merge2(merged(fxs), make_stream(x + 1), fn (x,y) => checker(x,y))) *)
+(*Put the first element first and then merge the rest*)
+  
+(**********************************************************************************************************)
+(**********************************************************************************************************)
+
 (* fun tuple_stream_make(str1: int stream, str2: int stream, n: int): int*int stream =
   fn () => 
     case str1() of
