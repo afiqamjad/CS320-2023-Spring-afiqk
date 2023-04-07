@@ -31,25 +31,6 @@ http://ats-lang.github.io/EXAMPLE/BUCS320/Doublets/Doublets.html
 ######
 """
 ####################################################
-def gpath_bfs(nxs, fnexts):
-    visited = set()
-    def helper(qpths):
-        if qpths.empty():
-            return strcon_nil()
-        else:
-            pth1 = qpths.get()
-            # print("gtree_bfs: helper: nx1 = ", nx1)
-            for nx2 in fnexts(pth1[-1]):
-                if not nx2 in visited:
-                    visited.add(nx2)
-                    qpths.put(pth1 + (nx2,))
-            return strcon_cons(pth1, lambda: helper(qpths))
-        # end-of-(if(qnxs.empty())-then-else)
-    qpths = queue.Queue()
-    for nx0 in nxs:
-        visited.add(nx0)
-        qpths.put(tuple([nx0]))
-    return lambda: helper(qpths)
 
 def find_children(word):
     return fnlist_filter_pylist(word_neighbors(word), lambda x: word_is_legal(x))
