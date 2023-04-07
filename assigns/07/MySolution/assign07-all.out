@@ -289,3 +289,17 @@ val N4 = 10000 : int
 val N5 = 100000 : int
 val mycheck1 = fn : (int * int) stream * int * int -> bool
 val it = () : unit
+
+
+PS C:\Users\afiqk\OneDrive\Desktop\CS320-2023-Spring-afiqk>  c:; cd 'c:\Users\afiqk\OneDrive\Desktop\CS320-2023-Spring-afiqk'; & 'C:\Users\afiqk\AppData\Local\Programs\Python\Python311\python.exe' 'c:\Users\afiqk\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\adapter/../..\debugpy\launcher' '58185' '--' 'c:\Users\afiqk\OneDrive\Desktop\CS320-2023-Spring-afiqk\assigns\07\MySolution\Python\assign07_03_test.py' 
+[nltk_data] Downloading package words to
+[nltk_data]     C:\Users\afiqk\AppData\Roaming\nltk_data...
+[nltk_data]   Package words is already up-to-date!
+potato:  True
+tomato:  True
+zucchini:  True
+test1 =  ('never', 'sever', 'seven', 'semen', 'hemen', 'hemin', 'humin', 'cumin', 'curin', 'aurin', 'agrin', 'again')
+test2 =  ('flour', 'floor', 'flood', 'blood', 'brood', 'broad', 'bread')
+test3 =  ('hello', 'hollo', 'holly', 'molly', 'mouly', 'mould', 'would', 'world')
+Assign07-03-test passed!
+PS C:\Users\afiqk\OneDrive\Desktop\CS320-2023-Spring-afiqk> 

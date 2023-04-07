@@ -67,7 +67,9 @@ def doublet_bfs_test(w1, w2):
         return [w1]
     bruh = gpath_bfs([w1], lambda x: find_children(x))
     huh = stream_make_filter(bruh, lambda x: x[0] == w1 and x[-1] == w2 if len(x) >= 2 else None)
-    return huh
-
+    try:
+        return stream_get_at(huh,0)
+    except IndexError:
+        return None
 
 ####################################################
