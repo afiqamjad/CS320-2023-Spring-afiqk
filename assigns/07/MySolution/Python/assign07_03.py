@@ -54,6 +54,13 @@ def gpath_bfs(nxs, fnexts):
 def find_children(word):
     return fnlist_filter_pylist(word_neighbors(word), lambda x: word_is_legal(x))
 
+def checker(x):
+    if type(x) == strcon_cons:
+        return x.cons1
+    elif type(x) == strcon_nil:
+        return None
+    return None
+
 def doublet_bfs_test(w1, w2):
     """
     Given two words w1 and w2, this function should
@@ -61,15 +68,15 @@ def doublet_bfs_test(w1, w2):
     it returns a path connecting w1 and w2 that attests to the
     two words forming a doublet.
     """
+    if w1 == "" or w2 == "":
+        return None
     if len(w1) != len(w2):
         return None
     if w1 == w2:
         return [w1]
     bruh = gpath_bfs([w1], lambda x: find_children(x))
     huh = stream_make_filter(bruh, lambda x: x[0] == w1 and x[-1] == w2 if len(x) >= 2 else None)
-    try:
-        return stream_get_at(huh,0)
-    except IndexError:
-        return None
+    return checker(huh())
+
 
 ####################################################
