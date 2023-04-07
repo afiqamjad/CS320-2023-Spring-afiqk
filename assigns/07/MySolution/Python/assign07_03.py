@@ -31,6 +31,29 @@ http://ats-lang.github.io/EXAMPLE/BUCS320/Doublets/Doublets.html
 ######
 """
 ####################################################
+def gpath_bfs(nxs, fnexts):
+    visited = set()
+    def helper(qpths):
+        if qpths.empty():
+            return strcon_nil()
+        else:
+            pth1 = qpths.get()
+            # print("gtree_bfs: helper: nx1 = ", nx1)
+            for nx2 in fnexts(pth1[-1]):
+                if not nx2 in visited:
+                    visited.add(nx2)
+                    qpths.put(pth1 + (nx2,))
+            return strcon_cons(pth1, lambda: helper(qpths))
+        # end-of-(if(qnxs.empty())-then-else)
+    qpths = queue.Queue()
+    for nx0 in nxs:
+        visited.add(nx0)
+        qpths.put(tuple([nx0]))
+    return lambda: helper(qpths)
+
+def find_children(word):
+    return fnlist_filter_pylist(word_neighbors(word), lambda x: word_is_legal(x))
+
 def doublet_bfs_test(w1, w2):
     """
     Given two words w1 and w2, this function should
@@ -38,5 +61,13 @@ def doublet_bfs_test(w1, w2):
     it returns a path connecting w1 and w2 that attests to the
     two words forming a doublet.
     """
-    raise NotImplementedError
+    if len(w1) != len(w2):
+        return None
+    if w1 == w2:
+        return [w1]
+    bruh = gpath_bfs([w1], lambda x: find_children(x))
+    huh = stream_make_filter(bruh, lambda x: x[0] == w1 and x[-1] == w2 if len(x) >= 2 else None)
+    return huh
+
+
 ####################################################

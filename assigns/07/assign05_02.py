@@ -33,7 +33,7 @@ def strsub(xs, i0): return xs[i0]
 def string_length(xs): return len(xs)
 def string_implode(xs): return "".join(xs)
 def string_filter(xs):
-    return foreach_to_filter_list(string_foreach)
+    return foreach_to_filter_pylist(string_foreach)
 def string_tabulate(n0, fopr_func):
     return string_implode(int1_map_fnlist(n0, fopr_func))
 #
