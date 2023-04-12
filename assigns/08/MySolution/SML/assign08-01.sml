@@ -132,9 +132,9 @@ fun streamize_gtree (tr: 'a gtree, merge: ('a * 'a stream list) -> 'a stream): '
                 let val sts = list_map (trs, fn tr => streamize_gtree (tr, merge))
                 in merge (a, sts) ()
                 end
-
 fun preord_gtree (tr: 'a gtree) =
     streamize_gtree (tr, fn (a, sts) =>
+        
         )
 *)
 fun mkList (n: int) : int list =
