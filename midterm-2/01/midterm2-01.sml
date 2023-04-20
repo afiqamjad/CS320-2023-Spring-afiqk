@@ -24,11 +24,26 @@ Then we have ln2 = stream_evaluate(fxs, 1.0) // see Assign06-01
 
 (* ****** ****** *)
 
-(*
 fun
 stream_evaluate
-(fxs: real stream, x0: real): real stream = ...
-*)
+(fxs: real stream, x0: real): real stream =
+  fn() =>
+  let
+      fun new_stream(fxss: real stream, x3: real, n: int, x2: real) =
+        fn() =>
+            (case fxss() of
+                strcon_nil => strcon_nil
+                |
+                strcon_cons(x1, fxss) =>
+                  let
+                    val huh = x3 + x1 * x2
+                  in
+                    strcon_cons(huh, new_stream(fxss, huh, n+1, x2*x0))
+                  end
+            )
+    in
+      new_stream(fxs, 0.0,0,1.0)()
+    end
 
 (* ****** ****** *)
 

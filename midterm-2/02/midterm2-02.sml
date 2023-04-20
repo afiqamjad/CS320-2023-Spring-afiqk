@@ -24,10 +24,16 @@ datatype 'a mytree =
 
 (* ****** ****** *)
 
-(*
+fun one_branch(t1: 'a mytree list): 'a strcon =
+    case t1 of
+      [] => strcon_nil
+      |
+      mytree_node(x1, xs)::xss => strcon_cons(x1, fn () => one_branch(xs@xss))
+
 fun
-mytree_dfs_streamize(t0: 'a mytree): 'a stream = ...
-*)
+mytree_dfs_streamize(t0: 'a mytree): 'a stream =
+  fn() =>
+    one_branch([t0])
 
 (* ****** ****** *)
 
