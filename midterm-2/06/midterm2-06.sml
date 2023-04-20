@@ -43,7 +43,7 @@ fun perm_counting_out( xs:int list, k0:int):int list =
             counter(0, xs, ys@[x1])
           else counter(x+1, xs@[x1], ys)
   in
-    count (0, xs, [])
+    counter(0, xs, [])
   end
 
 (* ****** ****** *)
