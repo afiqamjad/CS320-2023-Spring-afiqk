@@ -52,8 +52,8 @@ list_kmerge2
               list_kmerge2(xs, x2 :: xs1, fn y => res((x1 :: y)))
             else 
               list_kmerge2(x1 :: xs, xs1, fn y => res((x2 :: y)))
+      )
 )
-);
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-assigns-assign09-01.sml] *)
