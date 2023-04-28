@@ -35,13 +35,25 @@ case xs2 of
 
 (* ****** ****** *)
 
-(*
 fun
 list_kmerge2
-(xs1: int list
-,xs2: int list, ret: int list -> 'a): 'a = ...
-*)
-
+(xs: int list, xs1: int list, res: int list -> 'a): 'a =
+(
+  case xs of
+    nil => res(xs1)
+  | 
+    x1 :: xs =>
+      (
+        case xs1 of
+          nil => res((x1 :: xs))
+        | 
+          x2 :: xs1 =>
+            if x1 <= x2 then
+              list_kmerge2(xs, x2 :: xs1, fn y => res((x1 :: y)))
+            else 
+              list_kmerge2(x1 :: xs, xs1, fn y => res((x2 :: y)))
+)
+);
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-assigns-assign09-01.sml] *)
