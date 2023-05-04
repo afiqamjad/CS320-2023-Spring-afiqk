@@ -4,6 +4,7 @@
 import sys
 sys.path.append('./../../../05')
 sys.path.append('./../../../../mypylib')
+sys.setrecursionlimit(2000)
 from mypylib_cls import *
 ####################################################
 """
@@ -166,7 +167,15 @@ def image_seam_carving_1col_color(image):
     hh = image.height
     energy = image_edges_color(image)
     ################################################
+    ctable = {}
     def cenergy(i0, j0):
+        if (i0, j0) in ctable:
+            return ctable[(i0, j0)]
+        else:
+            result = cenergy2(i0, j0)
+            ctable[(i0, j0)] = result
+            return result
+    def cenergy2(i0, j0):
         evalue = imgvec.image_get_pixel(energy, i0, j0)
         if i0 <= 0:
             return evalue
