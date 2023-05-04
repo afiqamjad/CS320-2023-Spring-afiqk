@@ -30,6 +30,15 @@ assert320
 
 (* ****** ****** *)
 
+(* Added by Zach *)
+
+val hxs1 = list_streamize([27.0])
+val hres = stream_evaluate(hxs1, 0.0)
+val ()   = assert320(stream_length(hres) = 1)
+val ()   = assert320(abs(stream_head(hres) - 27.0) < 0.001)
+
+(* ****** ****** *)
+
 val (  ) = print("midterm2-01-test: passed!\n")
 
 (* ****** ****** *)

@@ -60,6 +60,22 @@ val () = assert320(zs4 = [16,16])
 val () = assert320(zs5 = [25,25])
 
 (* ****** ****** *)
+
+(* Added by Zach *)
+
+val hxs0 =
+stream_tabulate
+(~1, fn (n:int) => n)
+val hres = stream_drawdowns(hxs0)
+val strcon_cons(qs0, hres) = hres()
+val strcon_cons(qs1, hres) = hres()
+val strcon_cons(qs2, hres) = hres()
+
+val () = assert320(qs0 = [0])
+val () = assert320(qs1 = [1])
+val () = assert320(qs2 = [2])
+
+(* ****** ****** *)
 val (  ) = print("midterm2-04-test: passed!\n")
 (* ****** ****** *)
 
